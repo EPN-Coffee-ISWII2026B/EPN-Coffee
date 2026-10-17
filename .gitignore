@@ -1,0 +1,22 @@
+# Compilacion y binarios
+out/
+bin/
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Gradle / Maven (en caso de usarse)
+.gradle/
+build/
+target/
+
+# SO y temporales
+.DS_Store
+Thumbs.db
+*.log
