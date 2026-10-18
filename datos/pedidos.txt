@@ -1,5 +1,0 @@
-Juan Pérez;Local 1;2026-10-14;2;0
-María López;Local 2;2026-10-14;0;1
-Pedro Ruiz;Local 1;2026-10-13;1;2
-Juan Pérez;Local 2;2026-10-12;3;0
-Ana Torres;Local 3;2026-10-14;0;3

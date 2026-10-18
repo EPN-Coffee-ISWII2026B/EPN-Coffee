@@ -4,17 +4,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
 public class LectorPedidosTest {
 
     private LectorPedidos lector;
-    private static final String RUTA = "datos/pedidos.txt";
+    private static final String RUTA = "datos/pedidos.csv";
+    private static final String ENCABEZADO = "cliente,local,fecha,cafes,sandwiches\n";
 
     @BeforeEach
     public void setUp() {
         lector = new LectorPedidos();
+    }
+
+    // Método auxiliar para crear archivos CSV temporales en las pruebas
+    private String crearCsv(String contenido) throws IOException {
+        Path tmp = Files.createTempFile("pedidos", ".csv");
+        Files.writeString(tmp, contenido);
+        return tmp.toString();
     }
 
     @Test
@@ -55,28 +65,63 @@ public class LectorPedidosTest {
     }
 
     @Test
-    public void debeIgnorarLineasVaciasYComentarios() throws IOException {
-        // Escribimos un archivo temporal con comentarios y vacíos
-        java.nio.file.Path tmp = java.nio.file.Files.createTempFile("pedidos", ".txt");
-        java.nio.file.Files.writeString(tmp,
-                "# comentario\n" +
-                "\n" +
-                "Juan Pérez;Local 1;2026-10-14;1;0\n" +
-                "   \n" +
-                "# otro comentario\n" +
-                "Ana Torres;Local 3;2026-10-14;0;2\n");
+    public void debeSaltarseLaFilaDeEncabezados() throws IOException {
+        String ruta = crearCsv(ENCABEZADO + "Juan Pérez,Local 1,2026-10-14,1,0\n");
 
-        List<Pedido> pedidos = lector.leer(tmp.toString());
+        List<Pedido> pedidos = lector.leer(ruta);
+        assertEquals(1, pedidos.size());
+        assertEquals("Juan Pérez", pedidos.get(0).getNombreCliente());
+    }
+
+    @Test
+    public void debeIgnorarLineasVacias() throws IOException {
+        String ruta = crearCsv(ENCABEZADO +
+                "\n" +
+                "Juan Pérez,Local 1,2026-10-14,1,0\n" +
+                "   \n" +
+                "Ana Torres,Local 3,2026-10-14,0,2\n");
+
+        List<Pedido> pedidos = lector.leer(ruta);
         assertEquals(2, pedidos.size());
         assertEquals("Juan Pérez", pedidos.get(0).getNombreCliente());
         assertEquals("Ana Torres", pedidos.get(1).getNombreCliente());
     }
 
     @Test
-    public void debeLanzarErrorSiLaLineaTieneFormatoInvalido() throws IOException {
-        java.nio.file.Path tmp = java.nio.file.Files.createTempFile("malo", ".txt");
-        java.nio.file.Files.writeString(tmp, "SoloDosCampos;Local 1\n");
+    public void archivoSoloConEncabezadoNoTienePedidos() throws IOException {
+        String ruta = crearCsv(ENCABEZADO);
+        assertTrue(lector.leer(ruta).isEmpty());
+    }
 
-        assertThrows(IllegalArgumentException.class, () -> lector.leer(tmp.toString()));
+    @Test
+    public void debeLeerCamposEntreComillasConComas() throws IOException {
+        // Estándar CSV: un campo con coma va entre comillas dobles
+        String ruta = crearCsv(ENCABEZADO + "\"Pérez, Juan\",\"Local 1\",2026-10-14,2,1\n");
+
+        Pedido p = lector.leer(ruta).get(0);
+        assertEquals("Pérez, Juan", p.getNombreCliente());
+        assertEquals("Local 1", p.getLocal());
+        assertEquals(2, p.getCantidadCafes());
+        assertEquals(1, p.getCantidadSandwiches());
+    }
+
+    @Test
+    public void debeLeerComillasEscapadasDentroDeUnCampo() throws IOException {
+        // Estándar CSV: "" dentro de un campo entre comillas representa una comilla
+        String ruta = crearCsv(ENCABEZADO + "\"Café \"\"El Poli\"\"\",Local 2,2026-10-14,1,0\n");
+
+        assertEquals("Café \"El Poli\"", lector.leer(ruta).get(0).getNombreCliente());
+    }
+
+    @Test
+    public void debeLanzarErrorSiLaLineaTieneFormatoInvalido() throws IOException {
+        String ruta = crearCsv(ENCABEZADO + "SoloDosCampos,Local 1\n");
+        assertThrows(IllegalArgumentException.class, () -> lector.leer(ruta));
+    }
+
+    @Test
+    public void debeLanzarErrorSiElArchivoUsaElFormatoAntiguoConPuntoYComa() throws IOException {
+        String ruta = crearCsv(ENCABEZADO + "Juan Pérez;Local 1;2026-10-14;1;0\n");
+        assertThrows(IllegalArgumentException.class, () -> lector.leer(ruta));
     }
 }

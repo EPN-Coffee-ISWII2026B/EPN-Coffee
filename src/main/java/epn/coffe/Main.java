@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         LectorPedidos lector = new LectorPedidos();
-        String ruta = "datos/pedidos.txt";
+        String ruta = "datos/pedidos.csv";
 
         try {
             List<Pedido> pedidos = lector.leer(ruta);
