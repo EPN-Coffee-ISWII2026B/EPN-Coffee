@@ -2,9 +2,9 @@
 
 ### Tarea: Módulo de Ventas (POS)
 ### Integrantes:
-- Integrante 1
+- Dayana Martínez
 - Jarvin Rios
-- Integrante 3
+- Mateo Molina 
 ---
 
 Proyecto Java 17, Swing y Maven. Se conserva el `pom.xml` original y la estructura estándar `src/main/java` y `src/test/java`.
