@@ -1,37 +1,74 @@
-# Sistema de transferencias Matriz -> 5 sucursales (XP + TDD)
+# EPN-Coffee — Módulo de Ventas (HU1)
 
-### Tarea: TX (Sucursales)
+### Tarea: Módulo de Ventas (POS)
 ### Integrantes:
-- Kevin Alvear
-- Mauricio Carrión
-- Kevin García
-- Karolina Salazar
+- Integrante 1
+- Jarvin Rios
+- Integrante 3
+---
 
-Estructura:
-  src/    codigo de produccion (logica + CSV + interfaz Swing)
-  test/   pruebas (se escriben PRIMERO)
-  datos/  inventario_ejemplo.csv
+Proyecto Java 17, Swing y Maven. Se conserva el `pom.xml` original y la estructura estándar `src/main/java` y `src/test/java`.
 
-## 1) RED (solo las pruebas, sin src -> NO compila / rojo)
-    mkdir -p out
-    javac -encoding UTF-8 -d out test/transferencias/*.java
+## Historia de usuario implementada
 
-## 2) GREEN (con src + test -> todo verde)
-    javac -encoding UTF-8 -d out src/transferencias/*.java test/transferencias/*.java
-    java -cp out transferencias.TodasLasPruebas
+**HU1:** Como barista, quiero emitir una factura con el total de la venta, nombre del cliente y número de factura.
 
-## 3) Ejecutar la aplicacion con interfaz
-    java -cp out transferencias.App                              (vacio; usa el boton "Cargar CSV")
-    java -cp out transferencias.App datos/inventario_ejemplo.csv (carga el CSV al abrir)
-    java -cp out transferencias.App --demo                       (datos de ejemplo en codigo)
+- Selección de productos y cantidades.
+- Carrito con subtotales y total.
+- Nombre del cliente u opción de Consumidor Final.
+- Emisión de factura numerada, con detalle, fecha y total de venta.
+- Historial de facturas durante la ejecución.
 
-## Formato del CSV (UTF-8, una fila por producto y ubicacion)
-    id_producto,nombre_producto,sucursal,cantidad[,minimo]
-    P001,Laptop,Matriz,50,0
-    P001,Laptop,Norte,0,3
-    ...
-- Debe haber una ubicacion llamada "Matriz" y exactamente 5 sucursales mas.
-- cantidad: entero >= 0 (negativos -> error). minimo (opcional): entero >= 0, por defecto 1.
-- Separador coma o punto y coma (Excel en espanol). Sin comillas ni comas dentro de los nombres.
-- Si un producto no aparece en alguna sucursal, queda en 0 (vacio).
-- Un id = un nombre de producto; no puede haber filas repetidas (mismo id y sucursal).
+**HU2 no está implementada.** No hay selección ni registro de métodos de pago (crédito, débito ni transferencias).
+
+## Estructura Maven
+
+```text
+EPN-CoffeVENTAS/
+├── pom.xml
+├── README.md
+├── data/
+│   └── inventario.csv
+├── datos/
+│   └── inventario_ejemplo.csv
+└── src/
+    ├── main/java/epn/cafeteria/
+    │   ├── Main.java
+    │   └── ventas/
+    │       ├── Factura.java
+    │       ├── ItemVenta.java
+    │       ├── VentasFrame.java
+    │       └── VentasService.java
+    └── test/java/epn/cafeteria/ventas/
+        └── VentasServiceTest.java
+```
+
+No se incluye ningún archivo `.bat`. El directorio `target/`, si lo genera Maven, es de compilación y no contiene código fuente.
+
+## Ejecutar desde VS Code (Windows)
+
+1. Descomprime el archivo ZIP.
+2. En VS Code, selecciona **Archivo > Abrir carpeta** y elige `EPN-CoffeVENTAS` (la que contiene `pom.xml`).
+3. Con el JDK 17 o superior y la extensión **Extension Pack for Java** instalada, abre `src/main/java/epn/cafeteria/Main.java`.
+4. Haz clic en **Run Java** encima de `public static void main` para abrir el módulo de ventas.
+
+## Compilar y probar con Maven
+
+Si tienes Maven instalado, abre la terminal de VS Code en la carpeta que contiene `pom.xml` y ejecuta:
+
+```powershell
+mvn clean test
+mvn package
+java -jar target/EPN-Coffee-1.0.jar
+```
+
+El comando `mvn clean test` ejecuta las pruebas unitarias JUnit de HU1. La aplicación es de escritorio (Swing).
+
+> Si Windows muestra «mvn no se reconoce», falta instalar/configurar Maven o su ruta PATH; el problema no es del código del proyecto. Como alternativa, puedes usar **Run Java** en VS Code con el JDK y las extensiones indicadas.
+
+## Aclaraciones
+
+- Los precios del catálogo actualmente están definidos en `VentasFrame.java`.
+- Los CSV que venían con el proyecto se conservan, pero no alimentan el catálogo de ventas.
+- El historial y la numeración de facturas se mantienen en memoria mientras la aplicación está abierta; no se guardan al cerrar.
+- El ZIP original contenía archivos `.class` ya compilados de inventario y transferencias, pero no incluía sus archivos `.java`. Se omiten esos archivos compilados; `Main.java` abre únicamente Ventas (HU1).
