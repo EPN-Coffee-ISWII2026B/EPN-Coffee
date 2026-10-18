@@ -1,0 +1,6 @@
+sucursal,proveedor,producto,cantidad,precioUnitario,fecha,subtotal,iva,total
+"Quito Sur","Lácteos El Ordeño","Leche entera",3,3.5,2026-10-17,10.50,1.58,12.08
+"Quito Sur","Panadería La Espiga","Pan de queso",2,2,2026-10-17,4.00,0.60,4.60
+"Quito Centro","Lácteos El Ordeño","Leche entera",10,1.35,2026-10-17,13.50,2.03,15.53
+"Quito Valle","Café Andino","Café en grano",1,1.25,2026-10-17,1.25,0.19,1.44
+"Quito Norte","Arca Continental","Agua Dasani",12,1,2026-10-17,12.00,1.80,13.80

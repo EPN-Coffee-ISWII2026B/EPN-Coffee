@@ -1,0 +1,12 @@
+# Archivos compilados de Java
+bin/
+*.class
+
+# Carpetas de compilacion
+out/
+build/
+target/
+
+# Archivos temporales
+*.log
+*.tmp
