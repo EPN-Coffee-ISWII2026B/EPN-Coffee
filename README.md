@@ -10,8 +10,8 @@
 
 Estructura:
   src/    codigo de produccion
-  test/   pruebas (se escriben PRIMERO)
-  datos/  inventario_ejemplo.csv (formato compartido con el modulo POS)
+  test/   pruebas 
+  datos/  inventario_ejemplo.csv 
 
 ## Historia de Usuario 1
 > Como encargado de bodega, quiero registrar el stock de un producto
