@@ -3,7 +3,8 @@
 
 ### Tarea: Inventario
 ### Roles (ultima iteracion):
-- Developer (Programmer): Anthony
+- Developer (Programmer): Anthony Contreras
+- Tracker: Anthony Contreras
 - Coach: David Guachamin
 - On-site Customer: David Guachamin
 
