@@ -1,8 +1,9 @@
-proveedor,telefono,producto,cantidad
-Café Andino,0991234567,Café en grano,40
-Lácteos El Ordeño,0987654321,Leche entera,30
-Dulces del Valle,0998765432,Azúcar,50
-Dulces del Valle,0998765432,Chocolate en polvo,18
-Panadería La Espiga,022345678,Pan de queso,35
-Té Verde Distribuciones,0961122334,Té de manzanilla,4
-Té Verde Distribuciones,0961122334,Azúcar,15
+Tipo_Grano	Origen	Nivel_Tueste	Peso_Kg
+Arábica	Loja - Ecuador	Medio	15.5
+Robusta	Vietnam	Oscuro	8
+Blend	Colombia/Brasil	Medio-Oscuro	25
+Geisha	Panamá	Claro	3.5
+Arábica	Zaruma - Ecuador	Claro	12
+Robusta	Amazonía - Ecuador	Medio	40
+Arábica	Galápagos - Ecuador	Medio	5
+
