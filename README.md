@@ -14,9 +14,9 @@ Estructura:
   datos/  inventario_ejemplo.csv 
 
 ## Historia de Usuario 1
-> Como encargado de bodega, quiero registrar el stock de un producto
-> a partir de las entregas de los proveedores (mismo CSV que usa POS)
-> para saber cuanto tengo disponible y cuando debo reabastecer.
+HU-01 (MVP): "Como barista, quiero registrar un nuevo lote de café ingresando el tipo de grano, su origen, el nivel de tueste y el peso en kilogramos, para controlar con exactitud la materia prima disponible para la preparación de bebidas".
+## Historia de Usuario 2
+HU-02 (Para futuras iteraciones): "Como administrador, quiero descontar automáticamente el peso en gramos del inventario cada vez que se prepare una bebida, para tener un control del stock en tiempo real".
 
 Criterios de aceptacion:
 - Una entrega de un producto nuevo lo crea en el inventario con un stock minimo por defecto.
@@ -25,13 +25,6 @@ Criterios de aceptacion:
 - No se permite una cantidad ni un stock minimo negativos.
 - Se puede consultar el stock actual de un producto y saber si esta bajo su minimo.
 
-## Formato del CSV (compartido con el modulo POS)
-    proveedor,telefono,producto,cantidad
-    Café Andino,0991234567,Café en grano,40
-    ...
-Cada fila es una entrega de un proveedor. Si el producto ya existe (por nombre), se suma
-el stock entregado y se agrega el proveedor a su lista; si no existe, se crea con el
-stock minimo por defecto (10 unidades, configurable en `App.MINIMO_POR_DEFECTO`).
 
 ## 1) RED (solo las pruebas, sin src -> NO compila / rojo)
     mkdir -p out
