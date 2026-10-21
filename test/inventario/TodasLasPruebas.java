@@ -1,9 +1,9 @@
-package transferencias;
+package inventario;
 
 public class TodasLasPruebas {
     public static void main(String[] args) {
-        SucursalTest.ejecutar();
-        SistemaTransferenciasTest.ejecutar();
+        ProductoTest.ejecutar();
+        InventarioTest.ejecutar();
         CargadorCsvTest.ejecutar();
         Prueba.resumen();
     }

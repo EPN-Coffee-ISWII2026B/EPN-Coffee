@@ -1,4 +1,4 @@
-package transferencias;
+package inventario;
 
 import java.util.Objects;
 
@@ -26,9 +26,15 @@ public class Prueba {
         if (!condicion) throw new AssertionError(mensaje);
     }
 
-    static void assertThrows(Class<? extends Throwable> tipo, Runnable codigo) {
+    /** Admite tanto codigo normal como codigo cuyo cuerpo lanza excepciones checked (p.ej. ErrorCsvException). */
+    @FunctionalInterface
+    interface CodigoConExcepcion {
+        void ejecutar() throws Exception;
+    }
+
+    static void assertThrows(Class<? extends Throwable> tipo, CodigoConExcepcion codigo) {
         try {
-            codigo.run();
+            codigo.ejecutar();
         } catch (Throwable e) {
             if (tipo.isInstance(e)) return;
             throw new AssertionError("se esperaba " + tipo.getSimpleName() + " pero fue " + e);
